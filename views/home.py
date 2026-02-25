@@ -7,6 +7,7 @@ st.title("Meine erste Streamlit App")
 """
 Diese App wurde von folgenden Personen entwickelt:
 - Hannah Jung (junghan1@students.zhaw.ch)
+- Mimoza Mehmeti (mehmemim@students.zhaw.ch)
 
 Diese App ist das leere Gerüst für die App-Entwicklung im Modul Informatik 2 (BMLD/ZHAW)
 

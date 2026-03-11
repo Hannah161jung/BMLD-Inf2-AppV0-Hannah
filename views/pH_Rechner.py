@@ -3,12 +3,8 @@ import math
 import pandas as pd
 from datetime import datetime
  
-def calculate_ph(h_conc: float) -> float:
-    """Berechnet den pH-Wert aus der H⁺-Konzentration.
-    Erwartet einen positiven Wert, sonst wird eine Ausnahme geworfen."""
-    if h_conc <= 0:
-        raise ValueError("Die Konzentration muss größer als 0 sein.")
-    return -math.log10(h_conc)
+from functions.pH_Rechner import calculate_ph
+from functions.pH_Rechner import ph_result
  
 def app() -> None:
     st.title("pH‑Rechner")

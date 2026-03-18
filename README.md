@@ -1,9 +1,10 @@
-# BMLD-Inf2-AppV0
+# BMLD-Inf2-App
 
-Das leere Gerüst um eine App aufzubauen.
+Eine App, um den pH zu berechnen aus der H+-Konzentration. 
 
-## Autor
-
-Samuel Wehrli (wehs@zhaw.ch)
+## Autorinnen
+- Hannah Jung (junghan1@students.zhaw.ch)
+- Mimoza Mehmeti (mehmemim@students.zhaw.ch)
+ 
 
 

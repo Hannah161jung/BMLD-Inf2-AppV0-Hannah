@@ -1,9 +1,27 @@
 import streamlit as st
 import pandas as pd 
 
-#initialize empty data frame if not already present
+
+# --- CODE: import and initialize data manager and login manager ---
+from utils.data_manager import DataManager
+from utils.login_manager import LoginManager
+
+data_manager = DataManager(       # initialize data manager
+    fs_protocol='webdav',         # protocol for the filesystem, use webdav for switch drive
+    fs_root_folder="App_BMLD_pH"  # folder on switch drive where the data is stored
+    ) 
+login_manager = LoginManager(data_manager) # handles user login and registration
+login_manager.login_register()             # stops if not logged in
+# --- END OF CODE ---
+
+# --- CODE: load user data from data manager if not already present in session state --
 if 'data_df' not in st.session_state:
-    st.session_state['data_df'] = pd.DataFrame()
+    st.session_state['data_df'] = data_manager.load_user_data(
+        'data.csv',                     # The file on switch drive where the data is stored
+        initial_value=pd.DataFrame(),   # Initial value if the file does not exist
+        parse_dates=['timestamp']       # Parse timestamp as datetime
+    )
+# --- END OF CODE ---
 
 st.set_page_config(page_title="Meine App", page_icon=":material/home:")
 

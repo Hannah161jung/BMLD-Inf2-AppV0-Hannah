@@ -11,6 +11,10 @@ def app() -> None:
     st.title("pH‑Rechner")
     st.write("Ermitteln des pH‑Werts aus der Wasserstoffionenkonzentration [H⁺].")
  
+    # Initialize the DataFrame in session state if it doesn't exist
+    if 'data_df' not in st.session_state:
+        st.session_state['data_df'] = pd.DataFrame(columns=['ph_val'])  # Adjust columns as needed
+
     h_input = st.number_input(
         "Konzentration [H⁺] (mol L⁻¹)",
         min_value=0.0,
@@ -24,20 +28,23 @@ def app() -> None:
             try:
                 ph_val = calculate_ph(h_input)
                 st.success(f"pH = {ph_val:.3f}")
+
+                # --- NEW CODE to update history in session state and display it ---
+                st.session_state['data_df'] = pd.concat([st.session_state['data_df'], pd.DataFrame([{'ph_val': ph_val}])], ignore_index=True)
+        
+
+                # --- CODE UPDATE: save data to data manager ---
+                data_manager = DataManager()
+                data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
+                # --- END OF CODE UPDATE ---
+
+                # --- NEW CODE to display the history table ---
+                st.dataframe(st.session_state['data_df'])
+
             except Exception as exc:
                 st.error(str(exc))
+                
 if __name__ == "__main__":
     app()
  
 
-# --- NEW CODE to update history in session state and display it ---
-st.session_state['data_df'] = pd.concat([st.session_state['data_df'], pd.DataFrame([ph_val])])
-        
-
-# --- CODE UPDATE: save data to data manager ---
-data_manager = DataManager()
-data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
-# --- END OF CODE UPDATE ---
-
-# --- NEW CODE to display the history table ---
-st.dataframe(st.session_state['data_df'])
